@@ -65,7 +65,10 @@ jobs:
       run: git lfs install
     - name: Repo Initialization (Lineage)
       working-directory: android/lineage
-      run: repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs
+      run: repo init -u https://github.com/LineageOS/android.git -b lineage- ${{ vars.LINEAGE_VERSION }} --git-lfs
+    - name: Repo Sync (Lineage)
+      working-directory: android/lineage
+      run: repo sync
     - name: Repo Initialization (Android Kernel)
       working-directory: android-kernel
       run: repo init -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
