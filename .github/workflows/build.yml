@@ -72,3 +72,6 @@ jobs:
     - name: Repo Initialization (Android Kernel)
       working-directory: android-kernel
       run: repo init -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
+    - name: Repo Sync (Android Kernel)
+      working-directory: android-kernel
+      run: repo sync
