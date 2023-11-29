@@ -7,7 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        arch: ["x86_64"]
+        arch: ["lineage_gsi_x86_64-eng"]
     runs-on: ubuntu-latest
     timeout-minutes: 50400
     steps:
