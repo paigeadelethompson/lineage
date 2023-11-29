@@ -1,0 +1,71 @@
+name: build lineage
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        arch: ["x86_64"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 50400
+    steps:
+    - name: APT
+      run: |
+         sudo apt -y update
+         sudo apt -y install bc            \
+               ccache                      \
+               bison                       \
+               build-essential             \
+               curl                        \
+               flex                        \
+               g++-multilib                \
+               gcc-multilib                \
+               git                         \
+               gnupg                       \
+               gperf                       \
+               lib32ncurses5-dev           \
+               lib32readline-dev           \
+               lib32z1-dev                 \
+               zip                         \
+               unzip                       \
+               libsdl1.2-dev               \
+               libssl-dev                  \
+               libxml2                     \
+               libxml2-utils               \
+               lzop                        \
+               pngcrush                    \
+               rsync                       \
+               schedtool                   \
+               squashfs-tools              \
+               xsltproc                    \
+               zlib1g-dev                  \
+               libncurses5                 \
+               libncurses5-dev             \
+               lib32z1-dev                 \
+               libelf-dev                  \
+               liblz4-tool                 \
+               python3                     \
+               python-is-python3           \
+               android-sdk-platform-tools  \
+               adb                         \
+               fastboot                    \
+               repo                        \
+               default-jre                 \
+               sdkmanager                  \
+               android-sdk-libsparse-utils \
+               simg2img                    \
+               imagemagick                 \
+               git-lfs                     \
+               tree
+    - name: Directories
+      run: mkdir bin && mkdir -p android/lineage && mkdir android-kernel
+    - name: GIT LFS
+      run: git lfs install
+    - name: Repo Initialization (Lineage)
+      working-directory: android/lineage
+      run: repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs
+    - name: Repo Initialization (Android Kernel)
+      working-directory: android-kernel
+      run: repo init -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
