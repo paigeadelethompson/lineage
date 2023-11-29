@@ -7,7 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        arch: ["lineage_sdk_phone_x86_64-eng"]
+        lunch: ["lineage_sdk_phone_x86_64-eng"]
     runs-on: ubuntu-latest
     timeout-minutes: 50400
     steps:
@@ -65,11 +65,12 @@ jobs:
       run: git lfs install
     - name: Repo Initialization (Lineage)
       working-directory: android/lineage
-      run: repo init -u https://github.com/LineageOS/android.git -b lineage- ${{ vars.LINEAGE_VERSION }} --git-lfs
+      run: repo init -u https://github.com/LineageOS/android.git -b lineage-${{ vars.LINEAGE_VERSION }} --git-lfs
     - name: Repo Sync (Lineage)
       working-directory: android/lineage
       run: repo sync
     - name: Repo Initialization (Android Kernel)
+      if: ${{ matrix.lunch }} == "lineage_sdk_phone_x86_64-eng"
       working-directory: android-kernel
       run: repo init -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
     - name: Repo Sync (Android Kernel)
