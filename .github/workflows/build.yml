@@ -65,14 +65,17 @@ jobs:
       run: git lfs install
     - name: Repo Initialization (Lineage)
       working-directory: android/lineage
-      run: repo init -u https://github.com/LineageOS/android.git -b lineage-${{ vars.LINEAGE_VERSION }}
+      run: repo init -v -u https://github.com/LineageOS/android.git -b lineage-${{ vars.LINEAGE_VERSION }}
     - name: Repo Sync (Lineage)
       working-directory: android/lineage
-      run: repo sync
+      run: repo sync -v
     - name: Repo Initialization (Android Kernel)
       if: ${{ matrix.lunch }} == "lineage_sdk_phone_x86_64-eng"
       working-directory: android-kernel
-      run: repo init -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
+      run: repo init -v -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
     - name: Repo Sync (Android Kernel)
       working-directory: android-kernel
-      run: repo sync
+      run: repo sync -v
+    - name: lunch
+      working-directory: android/lineage
+      run: source build/envsetup.sh && lunch ${{ matrix.lunch }}
