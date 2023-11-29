@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         lunch: ["lineage_sdk_phone_x86_64-eng"]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     timeout-minutes: 50400
     steps:
     - name: APT
