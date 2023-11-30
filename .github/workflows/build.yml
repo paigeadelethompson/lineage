@@ -60,7 +60,7 @@ jobs:
                git-lfs                     \
                tree
     - name: Directories
-      run: mkdir bin && mkdir -p android/lineage && mkdir android-kernel
+      run: mkdir -p bin && mkdir -p android/lineage && mkdir -p android-kernel
     - name: GIT LFS
       run: git lfs install
     - name: Repo Initialization (Lineage)
