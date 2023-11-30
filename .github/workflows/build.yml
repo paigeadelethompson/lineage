@@ -76,8 +76,6 @@ jobs:
     - name: Repo Sync (Android Kernel)
       working-directory: android-kernel
       run: repo sync -j$(nproc)
-    - name: Setup ccache
-      uses: hendrikmuhs/ccache-action@v1.2
     - name: Lunch
       working-directory: android/lineage
       run: source build/envsetup.sh && lunch ${{ matrix.lunch }}
