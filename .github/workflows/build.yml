@@ -65,20 +65,28 @@ jobs:
       run: git lfs install
     - name: Repo Initialization (Lineage)
       working-directory: android/lineage
-      if: ${{ hashFiles('build/bazel/bazel.WORKSPACE') == '' }}
-      run: repo init -v -u https://github.com/LineageOS/android.git -b lineage-${{ vars.LINEAGE_VERSION }}
+      run: |
+        if [ ! -f "WORKSPACE" ]; then
+          repo init -v -u https://github.com/LineageOS/android.git -b lineage-${{ vars.LINEAGE_VERSION }}
+        fi
     - name: Repo Sync (Lineage)
-      if: ${{ hashFiles('build/bazel/bazel.WORKSPACE') == '' }}
       working-directory: android/lineage
-      run: repo sync -v -j$(nproc)
+      run: | 
+        if [ ! -f "WORKSPACE" ]; then
+          repo sync -v -j$(nproc)
+        fi
     - name: Repo Initialization (Android Kernel)
-      if: ${{ hashFiles('build/kernel/kleaf/bazel.WORKSPACE') == '' }}
       working-directory: android-kernel
-      run: repo init -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
+      run: | 
+        if [ ! -f "WORKSPACE" ]; then
+          repo init -u https://android.googlesource.com/kernel/manifest -b common-android-mainline
+        fi
     - name: Repo Sync (Android Kernel)
-      if: ${{ hashFiles('build/kernel/kleaf/bazel.WORKSPACE') == '' }}
       working-directory: android-kernel
-      run: repo sync -j$(nproc)
+      run: | 
+        if [ ! -f "WORKSPACE" ]; then
+          repo sync -j$(nproc)
+        fi
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2
     - name: Lunch
